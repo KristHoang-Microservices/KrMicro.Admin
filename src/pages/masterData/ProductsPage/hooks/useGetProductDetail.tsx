@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { productQueryKey } from "../constants/";
 import { productApi } from "../../../../api/masterData";
 import { toast } from "react-hot-toast";
-import { GetDetailProductRequest } from "../../../../api/masterData/requests/product/getDetailProduct.request.ts";
+import { GetDetailProductRequest } from "../../../../api/masterData/requests/product";
 
 interface UseGetProductDetailProps {
   request: GetDetailProductRequest | null;

@@ -8,9 +8,9 @@ import {
 } from "../common/models";
 import {
   CreateProductRequest,
+  GetDetailProductRequest,
   UpdateProductStatusRequest,
 } from "./requests/product";
-import { GetDetailProductRequest } from "./requests/product/getDetailProduct.request.ts";
 
 class ProductApi extends BaseApi {
   async getAll(): Promise<ListResponseModel<Product> | null> {
