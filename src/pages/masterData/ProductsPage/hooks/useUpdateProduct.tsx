@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "react-query";
 import { selectAccessToken } from "../../../../features/identity/identity.slice.ts";
 import { useAppSelector } from "../../../../app/hooks.ts";
-import { CreateProductRequest } from "../../../../api/masterData/requests/product";
+import { UpdateProductRequest } from "../../../../api/masterData/requests/product";
 import { productApi } from "../../../../api/masterData";
 import { toast } from "react-hot-toast";
 import { productQueryKey } from "../constants";
 
-export function useCreateProduct() {
+export function useUpdateProduct() {
   const accessToken: string | null = useAppSelector(selectAccessToken);
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (data: CreateProductRequest) => {
-      return await productApi.create(data, accessToken ?? undefined);
+    async (data: UpdateProductRequest) => {
+      return await productApi.update(data, accessToken ?? undefined);
     },
     {
       onError: () => {

@@ -9,6 +9,7 @@ import {
 import {
   CreateProductRequest,
   GetDetailProductRequest,
+  UpdateProductRequest,
   UpdateProductStatusRequest,
 } from "./requests/product";
 
@@ -31,6 +32,17 @@ class ProductApi extends BaseApi {
   ): Promise<DetailResponse<Product> | null> {
     return await this.tryPost<DetailResponse<Product>, CreateProductRequest>(
       productUrl.create,
+      request,
+      accessToken,
+    );
+  }
+
+  async update(
+    request: UpdateProductRequest,
+    accessToken?: string,
+  ): Promise<DetailResponse<Product> | null> {
+    return await this.tryPatch<DetailResponse<Product>, UpdateProductRequest>(
+      productUrl.update(request.id),
       request,
       accessToken,
     );

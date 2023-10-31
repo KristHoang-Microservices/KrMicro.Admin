@@ -6,6 +6,7 @@ export function getStatusName(status: Status) {
       return "Hoạt động";
     case Status.Disable:
       return "Dừng";
+    case Status.Delete:
+      return "Đã xóa";
   }
-  return "";
 }

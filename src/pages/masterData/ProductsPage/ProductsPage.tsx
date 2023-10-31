@@ -117,10 +117,7 @@ export function ProductsPage(): ReactElement {
     const res = await updateStatusAsync({
       request: {
         id: detail?.data.id ?? -1,
-        status:
-          detail?.data.status === Status.Available
-            ? Status.Disable
-            : Status.Available,
+        status: Status.Delete,
       },
     });
 

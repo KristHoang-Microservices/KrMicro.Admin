@@ -1,9 +1,12 @@
 import { Product } from "../../../../../api/masterData/models";
 import { CUForm } from "../../../../../components/CUFrom";
 import { useForm } from "react-hook-form";
-import { CreateProductRequest } from "../../../../../api/masterData/requests/product";
+import {
+  CreateProductRequest,
+  UpdateProductRequest,
+} from "../../../../../api/masterData/requests/product";
 import { Image, Input, Textarea } from "@nextui-org/react";
-import { useCreateProduct } from "../../hooks/";
+import { useCreateProduct, useUpdateProduct } from "../../hooks/";
 import { useEffect } from "react";
 
 interface ProductFormProps {
@@ -23,7 +26,7 @@ export function ProductFormModal({
   isUpdating,
 }: ProductFormProps) {
   const { register, handleSubmit, reset, watch } =
-    useForm<CreateProductRequest>({
+    useForm<UpdateProductRequest>({
       defaultValues: {
         description: data?.description,
         name: data?.name,
@@ -39,6 +42,8 @@ export function ProductFormModal({
 
   const { mutateAsync: createAsync, isLoading: createLoading } =
     useCreateProduct();
+  const { mutateAsync: updateAsync, isLoading: updateLoading } =
+    useUpdateProduct();
 
   useEffect(() => {
     reset({
@@ -48,8 +53,11 @@ export function ProductFormModal({
     });
   }, [data, reset]);
 
-  const onSubmit = async (data: CreateProductRequest) => {
-    const res = await createAsync(data);
+  const onSubmit = async (data: UpdateProductRequest) => {
+    let res;
+    if (isUpdating) res = await updateAsync(data);
+    else res = await createAsync(data as CreateProductRequest);
+
     if (res !== null) {
       onClose();
     }
@@ -75,13 +83,13 @@ export function ProductFormModal({
   };
 
   return (
-    <CUForm<CreateProductRequest>
+    <CUForm<UpdateProductRequest>
       name={isUpdating ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
       isOpen={isOpen}
       isUpdating={isUpdating}
       onClose={closeEndReset}
       onOpenChange={onOpenChange}
-      isLoading={createLoading}
+      isLoading={createLoading || updateLoading}
       onSubmit={onSubmit}
       handleSubmit={handleSubmit}
       onReset={() => onClear()}

@@ -6,5 +6,7 @@ export function getStatusColor(status: Status) {
       return "primary";
     case Status.Disable:
       return "warning";
+    case Status.Delete:
+      return "danger";
   }
 }
