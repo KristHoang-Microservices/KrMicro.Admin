@@ -1,7 +1,8 @@
-import { Key, ReactElement, useCallback, useState } from "react";
+import { Key, ReactElement, useCallback, useMemo, useState } from "react";
 import {
   Button,
   Chip,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -67,7 +68,11 @@ export function ProductsPage(): ReactElement {
         case "product":
           return (
             <User
-              avatarProps={{ radius: "lg", src: product.imageUrls }}
+              avatarProps={{
+                radius: "lg",
+                src: product.imageUrls,
+                className: " min-w-[75px] min-h-[75px]",
+              }}
               description={product?.brand?.name}
               name={product.name}
             />
@@ -196,6 +201,18 @@ export function ProductsPage(): ReactElement {
     }
   };
 
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+
+  const pages = Math.ceil((products?.listData?.length ?? 0) / rowsPerPage);
+
+  const items = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return products?.listData?.slice(start, end);
+  }, [page, products?.listData]);
+
   return (
     <div>
       <div className={"flex justify-between mb-3"}>
@@ -210,7 +227,23 @@ export function ProductsPage(): ReactElement {
         </Button>
       </div>
       <div>
-        <Table aria-label="Example table with custom cells" fullWidth={true}>
+        <Table
+          aria-label="Example table with custom cells"
+          fullWidth={true}
+          bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color="secondary"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+        >
           <TableHeader>
             {productTableColumns.map((column) => (
               <TableColumn
@@ -223,7 +256,7 @@ export function ProductsPage(): ReactElement {
           </TableHeader>
           <TableBody
             emptyContent={"Hỏng có gì để xem "}
-            items={products?.listData ?? []}
+            items={items ?? []}
             isLoading={loadingList}
           >
             {(item: Product) => (

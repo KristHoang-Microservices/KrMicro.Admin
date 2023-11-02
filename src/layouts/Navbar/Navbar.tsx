@@ -20,7 +20,7 @@ export function Navbar(): ReactElement {
   return (
     <div
       className={
-        "flex flex-col gap-3 min-w-[15vw] overflow-auto bg-white px-4 py-6 justify-between"
+        "flex flex-col gap-3 min-w-[15vw] overflow-auto bg-white px-4 py-6 justify-between sticky top-0"
       }
     >
       <div>

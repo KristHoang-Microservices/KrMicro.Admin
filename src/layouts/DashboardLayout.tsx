@@ -9,7 +9,7 @@ export function DashboardLayout(): ReactElement {
   return (
     <div
       className={
-        "flex w-screen h-screen overflow-hidden bg-[#f8f8f6] text-black"
+        "flex w-screen h-screen overflow-x-hidden overflow-y-auto bg-[#f8f8f6] text-black"
       }
     >
       <Navbar />
