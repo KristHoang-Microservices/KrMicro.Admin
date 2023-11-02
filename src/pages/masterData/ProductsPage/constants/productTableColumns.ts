@@ -48,6 +48,11 @@ export const productTableColumns: TableColumn[] = [
   },
   {
     id: 9,
+    name: "size",
+    display: "Kích thước",
+  },
+  {
+    id: 10,
     name: "actions",
     display: "",
   },

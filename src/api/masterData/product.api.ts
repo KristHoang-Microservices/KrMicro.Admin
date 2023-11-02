@@ -11,6 +11,7 @@ import {
   GetDetailProductRequest,
   UpdateProductRequest,
   UpdateProductStatusRequest,
+  UpdateProductStockRequest,
 } from "./requests/product";
 
 class ProductApi extends BaseApi {
@@ -63,6 +64,34 @@ class ProductApi extends BaseApi {
       accessToken,
     );
   }
+
+  async updateStock(
+    request: UpdateProductStockRequest,
+    accessToken?: string,
+  ): Promise<MessageResponse | null> {
+    if (accessToken === null) return null;
+    const { id, ...rest } = request;
+    return await this.tryPost<
+      MessageResponse,
+      Omit<UpdateProductStockRequest, "id">
+    >(productUrl.updateStock(id), rest, accessToken);
+  }
+
+  // async remove(
+  //   request: RemoveProductStatusRequest,
+  //   accessToken?: string,
+  // ): Promise<MessageResponse | null> {
+  //   if (accessToken === null) return null;
+  //
+  //   return await this.tryPost<
+  //     MessageResponse,
+  //     Omit<UpdateProductStatusRequest, "id">
+  //   >(
+  //     productUrl.updateStatus(request.id),
+  //     { status: Status.Delete },
+  //     accessToken,
+  //   );
+  // }
 }
 
 export const productApi: ProductApi = new ProductApi();

@@ -8,7 +8,7 @@ import { UsersPage } from "../../pages/identity/UsersPage";
 import { AscPage } from "../../pages/masterData/AscPage";
 import { CategoryPage } from "../../pages/masterData/CategoryPage";
 import { ProductsPage } from "../../pages/masterData/ProductsPage";
-import { BrandsPage } from "../../pages/masterData/BrandsPage";
+import { BrandPage } from "../../pages/masterData/BrandsPage";
 import { DiscountPage } from "../../pages/masterData/DiscountPage";
 
 export function DashboardRoute() {
@@ -74,7 +74,7 @@ export function DashboardRoute() {
         path={"/brands"}
         element={
           <Suspense fallback={<Loading />}>
-            <BrandsPage />
+            <BrandPage />
           </Suspense>
         }
       />

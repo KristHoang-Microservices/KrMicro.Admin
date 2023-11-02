@@ -11,14 +11,10 @@ import {
   Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
-import { productTableColumns } from "./constants/productTableColumns.ts";
-import {
-  useGetProduct,
-  useGetProductDetail,
-  useUpdateProductStatus,
-} from "./hooks";
+import { brandTableColumns } from "./constants";
+import { useGetBrand, useGetBrandDetail, useUpdateBrandStatus } from "./hooks";
 import { User } from "@nextui-org/user";
-import { Product } from "../../../api/masterData/models";
+import { Brand } from "../../../api/masterData/models";
 import moment from "moment";
 import { getStatusName } from "../../../utils/getStatusName.ts";
 import { getStatusColor } from "../../../utils/getStatusColor.ts";
@@ -29,27 +25,24 @@ import {
   HiOutlineTrash,
   HiPlus,
 } from "react-icons/hi";
-import { ProductFormModal } from "./components/ProductFormModal";
-import { GetDetailProductRequest } from "../../../api/masterData/requests/product";
+import { BrandFormModal } from "./components/BrandFormModal";
+import { GetDetailBrandRequest } from "../../../api/masterData/requests/brand";
 import { ConfirmForm } from "../../../components/ConfirmForm";
 import { Status } from "../../../models/status.enum.ts";
 import { toast } from "react-hot-toast";
-import { SizeFormModal } from "./components/SizeFormModal";
 
-export function ProductsPage(): ReactElement {
-  const { data: products, isLoading: loadingList } = useGetProduct();
+export function BrandPage(): ReactElement {
+  const { data: brands, isLoading: loadingList } = useGetBrand();
 
   const [detailRequest, setDetailRequest] =
-    useState<GetDetailProductRequest | null>(null);
+    useState<GetDetailBrandRequest | null>(null);
 
-  const { data: detail } = useGetProductDetail({ request: detailRequest });
+  const { data: detail } = useGetBrandDetail({ request: detailRequest });
 
   const { mutateAsync: updateStatusAsync, isLoading: updatingStatus } =
-    useUpdateProductStatus();
+    useUpdateBrandStatus();
 
   const { isOpen: CUFormIsOpen, onOpenChange: CUFormOnOpenChange } =
-    useDisclosure();
-  const { isOpen: SizeFormIsOpen, onOpenChange: SizeFormOnOpenChange } =
     useDisclosure();
   const {
     isOpen: ConfirmDelFormIsOpen,
@@ -61,15 +54,14 @@ export function ProductsPage(): ReactElement {
   } = useDisclosure();
 
   const renderCell = useCallback(
-    (product: Product, columnKey: number) => {
-      const cellValue = product[productTableColumns[columnKey].name];
-      switch (productTableColumns[columnKey].name) {
-        case "product":
+    (brand: Brand, columnKey: number) => {
+      const cellValue = brand[brandTableColumns[columnKey].name];
+      switch (brandTableColumns[columnKey].name) {
+        case "brand":
           return (
             <User
-              avatarProps={{ radius: "lg", src: product.imageUrls }}
-              description={product?.brand?.name}
-              name={product.name}
+              avatarProps={{ radius: "lg", src: brand.imageUrl }}
+              name={brand.name}
             />
           );
         case "status":
@@ -78,9 +70,9 @@ export function ProductsPage(): ReactElement {
               className="capitalize"
               size="sm"
               variant="flat"
-              color={getStatusColor(product.status)}
+              color={getStatusColor(brand.status)}
             >
-              {getStatusName(product.status)}
+              {getStatusName(brand.status)}
             </Chip>
           );
         case "createdAt":
@@ -93,17 +85,6 @@ export function ProductsPage(): ReactElement {
                 : ""}
             </p>
           );
-        case "size":
-          return (
-            <Button
-              onClick={() => {
-                setDetailRequest({ id: product.id });
-                SizeFormOnOpenChange();
-              }}
-            >
-              {product.productSizes.length} size
-            </Button>
-          );
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
@@ -111,7 +92,7 @@ export function ProductsPage(): ReactElement {
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   onClick={() => {
-                    setDetailRequest({ id: product.id });
+                    setDetailRequest({ id: brand.id });
                     CUFormOnOpenChange();
                   }}
                 >
@@ -119,19 +100,17 @@ export function ProductsPage(): ReactElement {
                 </span>
               </Tooltip>
               <Tooltip
-                color={
-                  product.status === Status.Available ? "primary" : "danger"
-                }
+                color={brand.status === Status.Available ? "primary" : "danger"}
                 content="Hiển thị"
               >
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
                   onClick={() => {
-                    setDetailRequest({ id: product.id });
+                    setDetailRequest({ id: brand.id });
                     ConfirmVisibleFormOnOpenChange();
                   }}
                 >
-                  {product.status === Status.Available ? (
+                  {brand.status === Status.Available ? (
                     <HiOutlineEye />
                   ) : (
                     <HiOutlineEyeOff />
@@ -142,7 +121,7 @@ export function ProductsPage(): ReactElement {
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
                   onClick={() => {
-                    setDetailRequest({ id: product.id });
+                    setDetailRequest({ id: brand.id });
                     ConfirmDelFormOnOpenChange();
                   }}
                 >
@@ -199,7 +178,7 @@ export function ProductsPage(): ReactElement {
   return (
     <div>
       <div className={"flex justify-between mb-3"}>
-        <p className={"font-semibold mb-4"}>Danh sách sản phẩm</p>
+        <p className={"font-semibold mb-4"}>Danh sách nhãn hiệu</p>
         <Button
           variant="solid"
           color={"primary"}
@@ -212,7 +191,7 @@ export function ProductsPage(): ReactElement {
       <div>
         <Table aria-label="Example table with custom cells" fullWidth={true}>
           <TableHeader>
-            {productTableColumns.map((column) => (
+            {brandTableColumns.map((column) => (
               <TableColumn
                 key={column.id}
                 align={column.name === "actions" ? "center" : "start"}
@@ -223,10 +202,10 @@ export function ProductsPage(): ReactElement {
           </TableHeader>
           <TableBody
             emptyContent={"Hỏng có gì để xem "}
-            items={products?.listData ?? []}
+            items={brands?.listData ?? []}
             isLoading={loadingList}
           >
-            {(item: Product) => (
+            {(item: Brand) => (
               <TableRow key={item.id}>
                 {(col: Key) => (
                   <TableCell>{renderCell(item, col as number)}</TableCell>
@@ -236,7 +215,7 @@ export function ProductsPage(): ReactElement {
           </TableBody>
         </Table>
       </div>
-      <ProductFormModal
+      <BrandFormModal
         isOpen={CUFormIsOpen}
         onClose={() => {
           CUFormOnOpenChange();
@@ -247,20 +226,9 @@ export function ProductsPage(): ReactElement {
         data={detailRequest !== null ? detail?.data : undefined}
       />
 
-      <SizeFormModal
-        isOpen={SizeFormIsOpen}
-        onClose={() => {
-          SizeFormOnOpenChange();
-          setDetailRequest(null);
-        }}
-        isUpdating={detailRequest !== null}
-        onOpenChange={SizeFormOnOpenChange}
-        data={detailRequest !== null ? detail?.data : undefined}
-      />
-
       <ConfirmForm
-        name={"Xóa sản phẩm"}
-        message={"Xác nhận xóa sản phẩm này " + detail?.data.name + " ?"}
+        name={"Xóa phân loại"}
+        message={"Xác nhận xóa phân loại này " + detail?.data.name + " ?"}
         isOpen={ConfirmDelFormIsOpen}
         onClose={() => {
           ConfirmDelFormOnOpenChange();
@@ -272,10 +240,10 @@ export function ProductsPage(): ReactElement {
       />
 
       <ConfirmForm
-        name={"Đổi trạng thái hiển thị sản phẩm"}
+        name={"Đổi trạng thái hiển thị phân loại"}
         message={`Xác nhận ${
           detail?.data.status === Status.Available ? "ẩn" : "hiện"
-        } sản phẩm này ${detail?.data.name} ?`}
+        } phân loại này ${detail?.data.name} ?`}
         isOpen={ConfirmVisibleFormIsOpen}
         onClose={() => {
           ConfirmVisibleFormOnOpenChange();

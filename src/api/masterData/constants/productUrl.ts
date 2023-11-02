@@ -10,3 +10,6 @@ export const update: (id: number) => string = (id: number) =>
   masterDataUrl(productBaseUrl + `/${id}`);
 export const updateStatus: (id: number) => string = (id: number) =>
   masterDataUrl(productBaseUrl + `/${id}/UpdateStatus`);
+
+export const updateStock: (id: number) => string = (id: number) =>
+  masterDataUrl(productBaseUrl + `/${id}/UpdateStock`);

@@ -1,13 +1,13 @@
 import { useQuery } from "react-query";
-import { productQueryKey } from "../constants/";
-import { productApi } from "../../../../api/masterData";
+import { categoryQueryKey } from "../constants/";
+import { categoryApi } from "../../../../api/masterData";
 import { toast } from "react-hot-toast";
 
-export function useGetProduct() {
+export function useGetCategory() {
   return useQuery(
-    productQueryKey.getAll,
+    categoryQueryKey.getAll,
     async () => {
-      const res = await productApi.getAll();
+      const res = await categoryApi.getAll();
       let data = res?.listData ?? [];
       data = data.sort((a, b) => a.id - b.id);
       return { ...res, listData: data };

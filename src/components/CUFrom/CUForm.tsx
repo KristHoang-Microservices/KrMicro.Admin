@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
 
 interface CUFormProps<TRequest extends FieldValues> {
@@ -19,7 +19,7 @@ interface CUFormProps<TRequest extends FieldValues> {
   handleSubmit: UseFormHandleSubmit<TRequest>;
 
   isUpdating: boolean;
-  children?: ReactElement;
+  children?: ReactElement | ReactElement[] | ReactNode;
   isLoading: boolean;
 }
 
