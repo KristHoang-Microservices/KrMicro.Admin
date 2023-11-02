@@ -62,12 +62,7 @@ export function CategoryPage(): ReactElement {
       const cellValue = category[categoryTableColumns[columnKey].name];
       switch (categoryTableColumns[columnKey].name) {
         case "category":
-          return (
-            <User
-              avatarProps={{ radius: "lg", src: category.imageUrl }}
-              name={category.name}
-            />
-          );
+          return <User avatarProps={{ radius: "lg" }} name={category.name} />;
         case "status":
           return (
             <Chip
