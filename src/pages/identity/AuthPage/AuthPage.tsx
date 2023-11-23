@@ -16,6 +16,7 @@ export function AuthPage(): ReactElement {
   const { register, handleSubmit } = useForm<LoginRequest>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const loginFn = async (data: LoginRequest) => {
     async function loginAsync() {
       const response = await identityApi.login(data);

@@ -5,6 +5,8 @@ import { UpdateProductStatusRequest } from "../../../../api/masterData/requests/
 import { useAppSelector } from "../../../../app/hooks.ts";
 import { selectAccessToken } from "../../../../features/identity/identity.slice.ts";
 import { productQueryKey } from "../constants";
+import { AxiosError } from "axios";
+import { MessageResponse } from "../../../../api/common/models";
 
 interface UseUpdateProductStatusProps {
   request: UpdateProductStatusRequest | null;
@@ -20,8 +22,11 @@ export function useUpdateProductStatus() {
       return productApi.updateStatus(request, accessToken ?? undefined);
     },
     {
-      onError: () => {
-        toast.error("Lỗi gồi!");
+      onError: (error: AxiosError<MessageResponse>) => {
+        toast.error(
+          error.response?.data.message ??
+            "Đã xảy ra lỗi khi cập nhật trạng thái",
+        );
       },
       onSuccess: () => {
         toast.success("Thành công nè!");

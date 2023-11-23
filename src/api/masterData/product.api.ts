@@ -9,14 +9,29 @@ import {
 import {
   CreateProductRequest,
   GetDetailProductRequest,
+  GetProductsByIdsRequest,
   UpdateProductRequest,
   UpdateProductStatusRequest,
   UpdateProductStockRequest,
 } from "./requests/product";
+import qs from "qs";
 
 class ProductApi extends BaseApi {
   async getAll(): Promise<ListResponseModel<Product> | null> {
     return await this.tryGet<ListResponseModel<Product>>(productUrl.getAll);
+  }
+
+  async getByIds(
+    request: GetProductsByIdsRequest,
+  ): Promise<ListResponseModel<Product> | null> {
+    return await this.tryGet<ListResponseModel<Product>>(
+      productUrl.getByIds,
+      undefined,
+      {
+        params: { ...request },
+        paramsSerializer: (params) => qs.stringify(params),
+      },
+    );
   }
 
   async getDetail(

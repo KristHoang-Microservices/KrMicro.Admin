@@ -14,8 +14,15 @@ import {
 } from "./requests/brand";
 
 class BrandApi extends BaseApi {
-  async getAll(): Promise<ListResponseModel<Brand> | null> {
-    return await this.tryGet<ListResponseModel<Brand>>(brandUrl.getAll);
+  async getAll({
+    accessToken,
+  }: {
+    accessToken?: string;
+  }): Promise<ListResponseModel<Brand> | null> {
+    return await this.tryGet<ListResponseModel<Brand>>(
+      brandUrl.getAll,
+      accessToken,
+    );
   }
 
   async getDetail(

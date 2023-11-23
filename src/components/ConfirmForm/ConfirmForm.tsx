@@ -33,7 +33,7 @@ export function ConfirmForm({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       onClose={onClose}
-      size={"4xl"}
+      size={"sm"}
       scrollBehavior={"inside"}
       isDismissable={false}
     >

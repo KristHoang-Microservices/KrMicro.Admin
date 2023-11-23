@@ -21,8 +21,7 @@ import {
 import { User } from "@nextui-org/user";
 import { Product } from "../../../api/masterData/models";
 import moment from "moment";
-import { getStatusName } from "../../../utils/getStatusName.ts";
-import { getStatusColor } from "../../../utils/getStatusColor.ts";
+import { getStatusColor, getStatusName } from "../../../utils";
 import {
   HiOutlineEye,
   HiOutlineEyeOff,
