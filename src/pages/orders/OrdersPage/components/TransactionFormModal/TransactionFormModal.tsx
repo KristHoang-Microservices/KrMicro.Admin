@@ -1,7 +1,7 @@
-import { CUForm } from "../../../../../components/CUFrom";
+import { CUForm } from "../../../../../components/CUForm";
 import { Transaction } from "../../../../../api/orders/models";
 import { UpdateOrderRequest } from "../../../../../api/orders/requests/order";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   getTransactionStatusColor,
   getTransactionStatusName,
@@ -21,7 +21,7 @@ interface OrderFormProps {
   onOpenChange: (isOpen?: boolean) => void;
 }
 
-export function TransactionFormModal({
+export function TransactionFormModalBuild({
   isOpen,
   onClose,
   onOpenChange,
@@ -35,9 +35,9 @@ export function TransactionFormModal({
   // });
 
   // const { mutateAsync: createAsync, isLoading: createLoading } =
-  //   useCreateOrder();
+  //   useCreateTransaction();
   // const { mutateAsync: updateAsync, isLoading: updateLoading } =
-  //   useUpdateOrder();
+  //   useUpdateTransaction();
 
   const { mutateAsync: updateStatusMutate, isLoading: updating } =
     useUpdateTransactionStatus();
@@ -75,7 +75,7 @@ export function TransactionFormModal({
 
   useEffect(() => {
     setTransaction(undefined);
-  }, [data]);
+  }, [data, orderId]);
 
   const closeEndReset = () => {
     onClose();
@@ -247,3 +247,5 @@ export function TransactionFormModal({
     </CUForm>
   );
 }
+
+export const TransactionFormModal = memo(TransactionFormModalBuild);

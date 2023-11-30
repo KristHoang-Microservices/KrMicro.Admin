@@ -8,14 +8,25 @@ import {
 import { orderUrl } from "./constants";
 import {
   CreateOrderRequest,
+  GetAllOrderRequest,
   GetDetailOrderRequest,
   UpdateOrderRequest,
   UpdateOrderStatusRequest,
 } from "./requests/order";
+import qs from "qs";
 
 class OrdersApi extends BaseApi {
-  async getAll(): Promise<ListResponseModel<Order> | null> {
-    return await this.tryGet<ListResponseModel<Order>>(orderUrl.getAll);
+  async getAll(
+    request?: GetAllOrderRequest,
+  ): Promise<ListResponseModel<Order> | null> {
+    return await this.tryGet<ListResponseModel<Order>>(
+      orderUrl.getAll,
+      undefined,
+      {
+        params: request,
+        paramsSerializer: (params) => qs.stringify(params),
+      },
+    );
   }
 
   async getDetail(

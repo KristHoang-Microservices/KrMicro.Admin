@@ -4,3 +4,10 @@ export enum TransactionStatus {
   Failed,
   Cancel,
 }
+
+export const TransactionStatusArray = [
+  "Chờ xác nhận",
+  "Thành công",
+  "Thất bại",
+  "Hủy",
+];

@@ -1,7 +1,10 @@
-import { Key, ReactElement, useCallback, useState } from "react";
+import { Key, ReactElement, useCallback, useMemo, useState } from "react";
 import {
   Button,
   Chip,
+  Input,
+  Select,
+  SelectItem,
   Table,
   TableBody,
   TableCell,
@@ -14,10 +17,13 @@ import {
 import { orderTableColumns } from "./constants";
 import { useGetOrderDetail, useGetOrders, useUpdateOrderStatus } from "./hooks";
 import { Order } from "../../../api/orders/models";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { HiOutlineEye, HiX } from "react-icons/hi";
 import { OrderFormModal } from "./components/OrderFormModal";
-import { GetDetailOrderRequest } from "../../../api/orders/requests/order";
+import {
+  GetAllOrderRequest,
+  GetDetailOrderRequest,
+} from "../../../api/orders/requests/order";
 import { ConfirmForm } from "../../../components/ConfirmForm";
 import { toast } from "react-hot-toast";
 import { User } from "@nextui-org/user";
@@ -27,11 +33,16 @@ import {
   getOrderStatusName,
   NextOrderStatusIcon,
 } from "../../../utils";
-import { OrderStatus } from "../../../api/orders/models/enum";
+import { OrderStatus, OrderStatusArray } from "../../../api/orders/models/enum";
 import { TransactionFormModal } from "./components/TransactionFormModal";
+import { CalendarModal } from "../../../components/CalendarModal";
 
 export function OrdersPage(): ReactElement {
-  const { data: orders, isLoading: loadingList } = useGetOrders();
+  const [ordersRequest, setOrderRequest] = useState<
+    GetAllOrderRequest | undefined
+  >();
+
+  const { data: orders, isLoading: loadingList } = useGetOrders(ordersRequest);
 
   const [detailRequest, setDetailRequest] =
     useState<GetDetailOrderRequest | null>(null);
@@ -47,6 +58,15 @@ export function OrdersPage(): ReactElement {
   const {
     isOpen: TransactionFormIsOpen,
     onOpenChange: TransactionFormOnOpenChange,
+  } = useDisclosure();
+
+  const {
+    isOpen: CalendarFromDateFormIsOpen,
+    onOpenChange: CalendarFromDateFormOnOpenChange,
+  } = useDisclosure();
+  const {
+    isOpen: CalendarToDateFormIsOpen,
+    onOpenChange: CalendarToDateFormOnOpenChange,
   } = useDisclosure();
 
   const {
@@ -171,8 +191,100 @@ export function OrdersPage(): ReactElement {
       CUFormOnOpenChange,
       ConfirmCancelFormOnOpenChange,
       ConfirmOrderFormOnOpenChange,
+      TransactionFormOnOpenChange,
     ],
   );
+
+  // // Search element
+  //
+  // const [searchFilter, setSearchFilter] = useState<string | undefined>();
+  // const onSearchChange = () => {};
+
+  const searchEngine = useMemo(() => {
+    return (
+      <div className={"flex flex-col gap-4"}>
+        <div className={"flex gap-4"}>
+          {/*<Input*/}
+          {/*  isClearable*/}
+          {/*  className="w-full"*/}
+          {/*  placeholder="Tìm kiếm tên khách hàng..."*/}
+          {/*  startContent={<HiSearch />}*/}
+          {/*  value={searchFilter}*/}
+          {/*  onClear={() => setSearchFilter(undefined)}*/}
+          {/*  onValueChange={setSearchFilter}*/}
+          {/*  size={"sm"}*/}
+          {/*/>*/}
+          <Select
+            label={"Trạng thái đơn"}
+            size={"sm"}
+            items={OrderStatusArray}
+            onChange={(value) =>
+              setOrderRequest((prev) => ({
+                ...prev,
+                orderStatus:
+                  value.target.value === ""
+                    ? undefined
+                    : Object.values(OrderStatus).findIndex(
+                        (x) => x === value.target.value,
+                      ),
+              }))
+            }
+          >
+            {OrderStatusArray.map((item: string, index) => (
+              <SelectItem
+                key={OrderStatus[index]}
+                value={OrderStatus[index]}
+                textValue={item}
+              >
+                {item}
+              </SelectItem>
+            ))}
+          </Select>
+          <Input
+            isReadOnly={true}
+            label={"Từ ngày"}
+            size={"sm"}
+            onClick={CalendarFromDateFormOnOpenChange}
+            value={
+              ordersRequest?.fromDate === undefined
+                ? undefined
+                : moment(ordersRequest?.fromDate).format("dddd DD/MM/YYYY")
+            }
+            isClearable={true}
+            onClear={() =>
+              setOrderRequest((prev) => ({ ...prev, fromDate: undefined }))
+            }
+          />
+          <Input
+            isReadOnly={true}
+            label={"Đến ngày"}
+            size={"sm"}
+            onClick={CalendarToDateFormOnOpenChange}
+            value={
+              ordersRequest?.toDate === undefined
+                ? undefined
+                : moment(ordersRequest?.toDate).format("dddd DD/MM/YYYY")
+            }
+            isClearable={true}
+            onClear={() =>
+              setOrderRequest((prev) => ({ ...prev, toDate: undefined }))
+            }
+          />
+        </div>
+        <div>
+          <p className={"text-sm text-gray-600 font-semibold"}>
+            Tổng cộng : {orders?.listData.length ?? 0} đơn hàng
+          </p>
+        </div>
+      </div>
+    );
+  }, [
+    CalendarFromDateFormOnOpenChange,
+    CalendarToDateFormOnOpenChange,
+    orders?.listData.length,
+    ordersRequest?.fromDate,
+    ordersRequest?.toDate,
+  ]);
 
   const onSubmitConfirmOrder = async () => {
     if (detail?.data === null) return;
@@ -221,7 +333,11 @@ export function OrdersPage(): ReactElement {
         {/*</Button>*/}
       </div>
       <div>
-        <Table aria-label="Example table with custom cells" fullWidth={true}>
+        <Table
+          aria-label="Example table with custom cells"
+          fullWidth={true}
+          topContent={searchEngine}
+        >
           <TableHeader>
             {orderTableColumns.map((column) => (
               <TableColumn
@@ -256,6 +372,29 @@ export function OrdersPage(): ReactElement {
           </TableBody>
         </Table>
       </div>
+
+      <CalendarModal
+        isOpen={CalendarFromDateFormIsOpen}
+        onOpenChange={CalendarFromDateFormOnOpenChange}
+        onSubmit={(date: Moment) =>
+          setOrderRequest((prev) => ({
+            ...prev,
+            fromDate: date.startOf("day").format(),
+          }))
+        }
+      />
+
+      <CalendarModal
+        isOpen={CalendarToDateFormIsOpen}
+        onOpenChange={CalendarToDateFormOnOpenChange}
+        onSubmit={(date: Moment) =>
+          setOrderRequest((prev) => ({
+            ...prev,
+            toDate: date.endOf("day").format(),
+          }))
+        }
+      />
+
       <OrderFormModal
         isOpen={CUFormIsOpen}
         onClose={() => {

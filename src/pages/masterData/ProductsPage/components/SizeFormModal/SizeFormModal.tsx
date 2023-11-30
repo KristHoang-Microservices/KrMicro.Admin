@@ -1,5 +1,5 @@
 import { Product } from "../../../../../api/masterData/models";
-import { CUForm } from "../../../../../components/CUFrom";
+import { CUForm } from "../../../../../components/CUForm";
 import { useFieldArray, useForm } from "react-hook-form";
 import { UpdateProductStockRequest } from "../../../../../api/masterData/requests/product";
 import { Button, Input, Tooltip } from "@nextui-org/react";

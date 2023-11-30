@@ -1,6 +1,7 @@
 import { OrderStatus } from "../api/orders/models/enum";
+import { BadgeProps } from "@nextui-org/react";
 
-export function getOrderStatusColor(status: OrderStatus) {
+export function getOrderStatusColor(status: OrderStatus): BadgeProps["color"] {
   switch (status) {
     case OrderStatus.Pending:
       return "default";

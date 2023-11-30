@@ -1,5 +1,5 @@
 import { Category } from "../../../../../api/masterData/models";
-import { CUForm } from "../../../../../components/CUFrom";
+import { CUForm } from "../../../../../components/CUForm";
 import { useForm } from "react-hook-form";
 import {
   CreateCategoryRequest,

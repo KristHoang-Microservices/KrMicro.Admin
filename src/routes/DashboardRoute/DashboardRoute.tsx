@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense } from "react";
 import { Loading } from "../../components/Loading";
-import { DashboardPage } from "../../pages/common/DashboardPage";
 import { IncomePage } from "../../pages/orders/IncomePage";
 import { OrdersPage } from "../../pages/orders/OrdersPage";
 import { UsersPage } from "../../pages/identity/UsersPage";
@@ -14,14 +13,14 @@ import { DiscountPage } from "../../pages/masterData/DiscountPage";
 export function DashboardRoute() {
   return (
     <Routes>
-      <Route
-        path={"/dashboard"}
-        element={
-          <Suspense fallback={<Loading />}>
-            <DashboardPage />
-          </Suspense>
-        }
-      />
+      {/*<Route*/}
+      {/*  path={"/dashboard"}*/}
+      {/*  element={*/}
+      {/*    <Suspense fallback={<Loading />}>*/}
+      {/*      <DashboardPage />*/}
+      {/*    </Suspense>*/}
+      {/*  }*/}
+      {/*/>*/}
       <Route
         path={"/income"}
         element={

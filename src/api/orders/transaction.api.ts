@@ -7,15 +7,24 @@ import {
 } from "../common/models";
 import { transactionUrl } from "./constants";
 import {
+  GetAllTransactionRequest,
   GetDetailTransactionRequest,
   GetTransactionByOrderIdRequest,
   UpdateTransactionStatusRequest,
 } from "./requests/transaction";
+import qs from "qs";
 
 class TransactionApi extends BaseApi {
-  async getAll(): Promise<ListResponseModel<TransactionApi> | null> {
-    return await this.tryGet<ListResponseModel<TransactionApi>>(
+  async getAll(
+    request?: GetAllTransactionRequest,
+  ): Promise<ListResponseModel<Transaction> | null> {
+    return await this.tryGet<ListResponseModel<Transaction>>(
       transactionUrl.getAll,
+      undefined,
+      {
+        params: request,
+        paramsSerializer: (params) => qs.stringify(params),
+      },
     );
   }
 

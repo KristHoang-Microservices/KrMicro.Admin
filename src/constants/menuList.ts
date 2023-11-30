@@ -7,15 +7,9 @@ import {
   HiTable,
   HiTicket,
   HiUser,
-  HiViewGrid,
 } from "react-icons/hi";
 
 export const menuList: MenuItem[] = [
-  {
-    name: "Dashboard",
-    icon: HiViewGrid,
-    path: "/dashboard",
-  },
   {
     name: "Quản lí Doanh thu",
     icon: HiChartBar,

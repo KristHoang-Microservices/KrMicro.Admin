@@ -1,4 +1,4 @@
-import { CUForm } from "../../../../../components/CUFrom";
+import { CUForm } from "../../../../../components/CUForm";
 import { useForm } from "react-hook-form";
 import { Button, Chip, Skeleton, Textarea } from "@nextui-org/react";
 import { useCreateOrder, useUpdateOrder } from "../../hooks/";

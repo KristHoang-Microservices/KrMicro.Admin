@@ -8,3 +8,5 @@ export * from "./getNextOrderStatus.ts";
 
 export * from "./getTransactionStatusName.ts";
 export * from "./getTransactionStatusColor.ts";
+export * from "./getNextTransactionStatus.ts";
+export * from "./NextTransactionStatusIcon.tsx";

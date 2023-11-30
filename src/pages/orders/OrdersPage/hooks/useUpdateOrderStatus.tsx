@@ -26,7 +26,7 @@ export function useUpdateOrderStatus() {
       onSuccess: () => {
         toast.success("Thành công nè!");
       },
-      onSettled: () => queryClient.invalidateQueries(orderQueryKey.getAll),
+      onSettled: () => queryClient.invalidateQueries(orderQueryKey.getAll()),
     },
   );
 }
