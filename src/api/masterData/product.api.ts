@@ -93,7 +93,7 @@ class ProductApi extends BaseApi {
   }
 
   // async remove(
-  //   request: RemoveProductStatusRequest,
+  //   requests: RemoveProductStatusRequest,
   //   accessToken?: string,
   // ): Promise<MessageResponse | null> {
   //   if (accessToken === null) return null;
@@ -102,7 +102,7 @@ class ProductApi extends BaseApi {
   //     MessageResponse,
   //     Omit<UpdateProductStatusRequest, "id">
   //   >(
-  //     productUrl.updateStatus(request.id),
+  //     productUrl.updateStatus(requests.id),
   //     { status: Status.Delete },
   //     accessToken,
   //   );

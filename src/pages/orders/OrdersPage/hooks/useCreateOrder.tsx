@@ -17,7 +17,7 @@ export function useCreateOrder() {
     {
       onSuccess: async () => {
         toast.success("Đã thêm!");
-        await queryClient.invalidateQueries(orderQueryKey.getAll);
+        await queryClient.invalidateQueries(orderQueryKey.getAll());
       },
     },
   );

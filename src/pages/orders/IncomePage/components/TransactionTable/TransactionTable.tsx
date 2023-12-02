@@ -265,7 +265,7 @@ export function TransactionTable(): ReactElement {
   // const onSubmitConfirmTransaction = async () => {
   //   if (detail?.data === null) return;
   //   const res = await updateStatusAsync({
-  //     request: {
+  //     requests: {
   //       id: detail?.data.id ?? -1,
   //       transactionStatus: getNextTransactionStatus(
   //         detail?.data.transactionStatus ?? TransactionStatus.Success,
@@ -282,7 +282,7 @@ export function TransactionTable(): ReactElement {
   // const onSubmitCancelled = async () => {
   //   if (detail?.data === null) return;
   //   const res = await updateStatusAsync({
-  //     request: {
+  //     requests: {
   //       id: detail?.data.id ?? -1,
   //       transactionStatus: TransactionStatus.Cancel,
   //     },

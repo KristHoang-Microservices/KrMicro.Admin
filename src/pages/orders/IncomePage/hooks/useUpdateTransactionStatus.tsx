@@ -25,7 +25,7 @@ export function useUpdateTransactionStatus() {
       },
       onSuccess: async () => {
         toast.success("Đã cập nhật thành công !");
-        await queryClient.invalidateQueries(transactionQueryKey.getAll);
+        await queryClient.invalidateQueries(transactionQueryKey.getAll());
       },
     },
   );

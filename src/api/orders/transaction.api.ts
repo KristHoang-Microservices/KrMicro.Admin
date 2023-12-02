@@ -48,23 +48,23 @@ class TransactionApi extends BaseApi {
 
   //
   // async create(
-  //   request: CreateTransactionRequest,
+  //   requests: CreateTransactionRequest,
   //   accessToken?: string,
   // ): Promise<DetailResponse<Transaction> | null> {
   //   return await this.tryPost<DetailResponse<Transaction>, CreateTransactionRequest>(
   //     transactionUrl.create,
-  //     request,
+  //     requests,
   //     accessToken,
   //   );
   // }
   //
   // async update(
-  //   request: UpdateTransactionRequest,
+  //   requests: UpdateTransactionRequest,
   //   accessToken?: string,
   // ): Promise<DetailResponse<Transaction> | null> {
   //   return await this.tryPatch<DetailResponse<Transaction>, UpdateTransactionRequest>(
-  //     transactionUrl.update(request.id),
-  //     request,
+  //     transactionUrl.update(requests.id),
+  //     requests,
   //     accessToken,
   //   );
   // }

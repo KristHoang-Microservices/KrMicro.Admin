@@ -33,7 +33,7 @@ export abstract class BaseApi {
    * HTTP Get Method
    * @param {string} url Resource URL
    * @param {string} accessToken Access token
-   * @param {RawAxiosRequestConfig} config Additional request configurations
+   * @param {RawAxiosRequestConfig} config Additional requests configurations
    * @returns {Promise<AxiosResponse<T> | null>} Result of T
    */
   protected async tryGet<T>(
@@ -68,7 +68,7 @@ export abstract class BaseApi {
    * @param {string} url Resource URL
    * @param {TBody} data Data for posting
    * @param {string} accessToken Access token
-   * @param {RawAxiosRequestConfig} config Additional request configurations
+   * @param {RawAxiosRequestConfig} config Additional requests configurations
    * @returns {Promise<AxiosResponse<TReturn> | null>} Result of T
    */
   protected async tryPost<TReturn, TBody = undefined>(
@@ -94,7 +94,7 @@ export abstract class BaseApi {
    * @param {string} url Resource URL
    * @param {TBody} data Data for patching
    * @param {string} accessToken Access token
-   * @param {RawAxiosRequestConfig} config Additional request configurations
+   * @param {RawAxiosRequestConfig} config Additional requests configurations
    * @returns {Promise<AxiosResponse<TReturn> | null>} Result of T
    */
   protected async tryPatch<TReturn, TBody = undefined>(
@@ -120,7 +120,7 @@ export abstract class BaseApi {
    * @param {string} url Resource URL
    * @param {TBody} data Data for patching
    * @param {string} accessToken Access token
-   * @param {RawAxiosRequestConfig} config Additional request configurations
+   * @param {RawAxiosRequestConfig} config Additional requests configurations
    * @returns {Promise<AxiosResponse<TReturn> | null>} Result of T
    */
   protected async tryPut<TReturn, TBody = undefined>(

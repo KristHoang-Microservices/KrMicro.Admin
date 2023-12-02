@@ -17,7 +17,7 @@ export function useCreateTransaction() {
     {
       onSuccess: async () => {
         toast.success("Đã thêm!");
-        await queryClient.invalidateQueries(transactionQueryKey.getAll);
+        await queryClient.invalidateQueries(transactionQueryKey.getAll());
       },
     },
   );
