@@ -183,7 +183,7 @@ export function TransactionFormModalBuild({
                   </div>
                   <div className={"flex gap-2"}>
                     <p className={"font-semibold"}>Giá trị giao dịch</p>
-                    <p>{selectedTransaction.total} VNĐ</p>
+                    <p>{selectedTransaction.total?.toLocaleString()} VNĐ</p>
                   </div>
                   <div className={"flex gap-2"}>
                     <p className={"font-semibold"}>Ngày tạo</p>

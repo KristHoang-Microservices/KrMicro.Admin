@@ -23,16 +23,21 @@ export const transactionTableColumns: TableColumn[] = [
   },
   {
     id: 4,
+    name: "transactionType",
+    display: "Loại",
+  },
+  {
+    id: 5,
     name: "order",
     display: "Đơn hàng",
   },
   {
-    id: 5,
+    id: 6,
     name: "createdAt",
     display: "Ngày tạo",
   },
   {
-    id: 6,
+    id: 7,
     name: "updatedAt",
     display: "Ngày cập nhật",
   },

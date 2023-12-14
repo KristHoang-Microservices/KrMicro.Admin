@@ -81,16 +81,10 @@ export function TransactionTable(): ReactElement {
             </Chip>
           );
         case "order":
+          return <p className={"font-semibold"}>#{transaction.orderId}</p>;
+        case "transactionType":
           return (
-            // <Button
-            //   onClick={() => {
-            //     setDetailRequest({ id: transaction.id });
-            //     TransactionFormOnOpenChange();
-            //   }}
-            // >
-            //   {transaction.transactions.length} giao dịch
-            // </Button>
-            <p className={"font-semibold"}>#{transaction.orderId}</p>
+            <p className={"font-semibold"}>{transaction.paymentMethod.name}</p>
           );
         case "createdAt":
           return (

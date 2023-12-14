@@ -22,8 +22,8 @@ export function getRangeDueToSelection(selectedTime: string): {
       };
     default:
       return {
-        fromDate: moment(new Date()).toISOString(),
-        toDate: moment(new Date()).toISOString(),
+        fromDate: moment(new Date()).startOf("day").toISOString(),
+        toDate: moment(new Date()).endOf("day").toISOString(),
       };
   }
 }

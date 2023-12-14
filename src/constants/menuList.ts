@@ -3,7 +3,6 @@ import {
   HiChartBar,
   HiColorSwatch,
   HiFolder,
-  HiOfficeBuilding,
   HiTable,
   HiTicket,
   HiUser,
@@ -26,11 +25,6 @@ export const menuAdmin: MenuItem[] = [
     name: "Quản lí Người dùng",
     icon: HiUser,
     path: "/users",
-  },
-  {
-    name: "Quản lí Cơ sở",
-    icon: HiOfficeBuilding,
-    path: "/asc",
   },
   {
     name: "Quản lí Category",

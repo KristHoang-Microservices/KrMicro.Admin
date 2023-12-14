@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
-export function AscPage(): ReactElement {
-  return <div>Asc page</div>;
+export function AscPage() {
+  return <div>Asc</div>;
 }

@@ -1,5 +1,7 @@
 export interface UserModel {
-  id: number;
+  [index: string]: string | number | undefined;
+
+  id: string;
   fullName: string;
   userName: string;
   email: string;

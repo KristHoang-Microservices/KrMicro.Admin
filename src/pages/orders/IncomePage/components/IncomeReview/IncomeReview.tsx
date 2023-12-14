@@ -16,8 +16,8 @@ import { FaDotCircle } from "react-icons/fa";
 
 export function IncomeReview() {
   const [time, setTime] = useState<GetIncomeReportRequest>({
-    fromDate: moment(new Date()).toISOString(true),
-    toDate: moment(new Date()).toISOString(true),
+    fromDate: moment(new Date()).startOf("day").toISOString(true),
+    toDate: moment(new Date()).endOf("day").toISOString(true),
   });
   const { data } = useGetIncomeReport(time);
   return (

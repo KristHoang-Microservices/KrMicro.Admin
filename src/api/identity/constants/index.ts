@@ -1,2 +1,3 @@
 export * from "./identityUrl.ts";
-export * from "./authUrl.ts";
+export * as authUrl from "./authUrl.ts";
+export * as accountUrl from "./accountUrl.ts";

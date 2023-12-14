@@ -100,7 +100,7 @@ class ProductApi extends BaseApi {
   //
   //   return await this.tryPost<
   //     MessageResponse,
-  //     Omit<UpdateProductStatusRequest, "id">
+  //     Omit<UpdatePromoStatusRequest, "id">
   //   >(
   //     productUrl.updateStatus(requests.id),
   //     { status: Status.Delete },

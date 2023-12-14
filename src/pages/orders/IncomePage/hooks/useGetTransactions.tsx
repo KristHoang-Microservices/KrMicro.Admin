@@ -8,7 +8,7 @@ export function useGetTransactions(request?: GetAllTransactionRequest) {
   return useQuery(transactionQueryKey.getAll(request), async () => {
     const res = await transactionApi.getAll(request);
     let data = res?.listData ?? [];
-    data = data.sort((a, b) => a.id - b.id);
+    data = data.sort((a, b) => b.id - a.id);
     return { ...res, listData: data };
   });
 }
